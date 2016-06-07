@@ -3,4 +3,4 @@ install: true
 
 script:
   - ./configure
-  - cat Makefile
+  - make -w
