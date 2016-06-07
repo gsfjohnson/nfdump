@@ -22,11 +22,18 @@ rm -rf $RPM_BUILD_ROOT
 %setup -q
 
 %build
-./configure --prefix=$RPM_BUILD_ROOT/%{prefix} --libdir=$RPM_BUILD_ROOT/%{_libdir}
-make
+%configure \
+  --enable-nfprofile \
+  --enable-sflow \
+  --enable-nsel \
+  --disable-static \
+  --disable-shared \
+  --prefix=$RPM_BUILD_ROOT/%{prefix} \
+  --libdir=$RPM_BUILD_ROOT/%{_libdir}
+%{__make} %{?_smp_mflags}
 
 %install
-make install
+%{makeinstall}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
