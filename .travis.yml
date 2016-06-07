@@ -15,3 +15,6 @@ before_install:
 
 script:
   - ./build.sh ${OS_VERSION} nfdump
+
+notifications:
+  email: false

@@ -16,7 +16,7 @@ rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-${OS_VERSION}
 echo "exclude=mirror.beyondhosting.net" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
 yum -y install yum-plugin-priorities
-yum -y install rpm-build gcc gcc-c++ bzip2-devel cmake git tar gzip make autotools flex byacc
+yum -y install rpm-build gcc gcc-c++ bzip2-devel cmake git tar gzip make autotools flex byacc rrdtool-devel
 
 # Prepare the RPM environment
 mkdir -p /tmp/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
