@@ -27,7 +27,6 @@ rm -rf $RPM_BUILD_ROOT
   --enable-sflow \
   --enable-nsel \
   --disable-static \
-  --disable-shared \
   --prefix=$RPM_BUILD_ROOT/%{prefix} \
   --libdir=$RPM_BUILD_ROOT/%{_libdir}
 %{__make} %{?_smp_mflags}
