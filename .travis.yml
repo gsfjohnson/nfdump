@@ -14,4 +14,4 @@ before_install:
   - sudo docker pull centos:centos${OS_VERSION}
 
 script:
-  - ./build.sh ${OS_VERSION}
+  - ./build.sh ${OS_VERSION} nfdump
