@@ -2,4 +2,7 @@ language: c
 
 install: true
 
-script: ./configure && make && make test
+script:
+  - ./configure
+  - make
+  - make test
