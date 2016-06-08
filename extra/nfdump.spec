@@ -30,7 +30,8 @@ rm -rf $RPM_BUILD_ROOT
 %configure \
   --enable-nfprofile \
   --enable-sflow \
-  --enable-nsel
+  --enable-nsel \
+  --prefix=$RPM_BUILD_ROOT/%{prefix}
 %{__make} %{?_smp_mflags}
 
 %install
