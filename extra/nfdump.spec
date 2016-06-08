@@ -1,3 +1,8 @@
+%define nfdumpuser	nobody
+%define nfdumpgroup	nobody
+%define nfcapddatadir	/var/lib/nfcapd
+%define sfcapddatadir	/var/lib/sfcapd
+
 Name: nfdump
 Summary: A set of command-line tools to collect and process netflow data
 Version: 1.6.15
@@ -5,7 +10,7 @@ Release: 1
 License: BSD
 Group: Applications/System
 Source: %{name}-%{version}.tar.gz
-BuildRequires: flex
+BuildRequires: flex rrdtool-devel
 BuildRoot: %{_tmppath}/%{name}-root
 Packager: Colin Bloch <fourthdown@gmail.com>
 Prefix: /usr
@@ -25,21 +30,29 @@ rm -rf $RPM_BUILD_ROOT
 %configure \
   --enable-nfprofile \
   --enable-sflow \
-  --enable-nsel \
-  --disable-static \
-  --prefix=$RPM_BUILD_ROOT/%{prefix} \
-  --libdir=$RPM_BUILD_ROOT/%{_libdir}
+  --enable-nsel
 %{__make} %{?_smp_mflags}
 
 %install
-%{makeinstall}
+%{__make} install DESTDIR=%{buildroot}
+%{__rm} -vrf %{buildroot}/usr/src
+%{__rm} -vrf %{buildroot}/usr/lib
+%{__install} -D -d \
+	%{buildroot}/var/run/nfdump \
+	%{buildroot}%{nfcapddatadir} \
+	%{buildroot}%{sfcapddatadir}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+[ "%{buildroot}" != "/" ] && [ -d %{buildroot} ] && %{__rm} -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
 %doc INSTALL README.md ToDo BSD-license.txt AUTHORS ChangeLog
-%{prefix}/bin/*
-%{prefix}/share/man/man1/*
+%doc %{_mandir}/man?/*
+%{_bindir}/*
 %{_libdir}/*
+
+%defattr(0750, %{nfdumpuser}, %{nfdumpgroup})
+%dir /var/run/nfdump
+%dir %{nfcapddatadir}
+%dir %{sfcapddatadir}
